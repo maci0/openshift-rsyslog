@@ -1,0 +1,22 @@
+= openshift-rsyslog
+This is using DaemonSets and ConfigMaps to configure rsyslog on an OpenShift Cluster
+to send all log files to an external rsyslog server.
+
+== Setup Project
+----
+# oadm new-project rsyslog --node-selector=""
+$ oc project rsyslog
+----
+
+=== Set SCC
+The rsyslog pods need to run privileged in order to access certain system resources.
+ * /etc/machine-id - read
+ * /etc/hostname - read
+ * /var/log - read/write
+ * /run/log - read/write
+
+
+As system:admin do the following:
+----
+# oadm policy add-scc-to-user privileged system:serviceaccount:rsyslog:default
+----
