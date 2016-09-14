@@ -49,6 +49,9 @@ items:
           - mountPath: /etc/hostname
             name: etchostname
             readOnly: true
+          - mountPath: /etc/rsyslog.d
+            name: rsyslog-config-vol
+            readOnly: true
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         securityContext: {}
@@ -69,5 +72,11 @@ items:
         - hostPath:
             path: /etc/hostname
           name: etchostname
+        - name: rsyslog-config-vol
+          configMap:
+            name: rsyslog-config-cm
+            items:
+            - key: container-config
+              path: container.conf
 kind: List
 metadata: {}

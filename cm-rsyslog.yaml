@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rsyslog-config-cm
+data:
+  container-config: |
+    *.* @remote-log-host.example.org
