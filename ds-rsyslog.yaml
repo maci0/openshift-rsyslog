@@ -6,12 +6,15 @@ items:
     labels:
       app: rsyslog
     name: rsyslog
-    namespace: rsyslog
   spec:
     selector:
       matchLabels:
         app: rsyslog
         deploymentconfig: rsyslog
+    updateStrategy:
+      type: RollingUpdate
+      rollingUpdate:
+        minReadySeconds: 600
     template:
       metadata:
         annotations:
@@ -39,14 +42,17 @@ items:
             name: runlog
           - mountPath: /etc/machine-id
             name: etcmachineid
+            readOnly: true
           - mountPath: /etc/localtime
             name: etclocaltime
+            readOnly: true
           - mountPath: /etc/hostname
             name: etchostname
+            readOnly: true
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         securityContext: {}
-       terminationGracePeriodSeconds: 30
+        terminationGracePeriodSeconds: 30
         volumes:
         - hostPath:
             path: /var/log
