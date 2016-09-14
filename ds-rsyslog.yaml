@@ -3,11 +3,10 @@ items:
 - apiVersion: extensions/v1beta1
   kind: DaemonSet
   metadata:
-    creationTimestamp: null
-    generation: 2
     labels:
       app: rsyslog
     name: rsyslog
+    namespace: rsyslog
   spec:
     selector:
       matchLabels:
@@ -47,23 +46,7 @@ items:
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         securityContext: {}
-        terminationGracePeriodSeconds: 30
-        volumes:
-        - hostPath:
-            path: /var/log
-            name: varlog
-          - mountPath: /run/log
-            name: runlog
-          - mountPath: /etc/machine-id
-            name: etcmachineid
-          - mountPath: /etc/localtime
-            name: etclocaltime
-          - mountPath: /etc/hostname
-            name: etchostname
-        dnsPolicy: ClusterFirst
-        restartPolicy: Always
-        securityContext: {}
-        terminationGracePeriodSeconds: 30
+       terminationGracePeriodSeconds: 30
         volumes:
         - hostPath:
             path: /var/log
@@ -80,9 +63,5 @@ items:
         - hostPath:
             path: /etc/hostname
           name: etchostname
-  status:
-    currentNumberScheduled: 3
-    desiredNumberScheduled: 3
-    numberMisscheduled: 0
 kind: List
 metadata: {}
