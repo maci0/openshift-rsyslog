@@ -35,3 +35,22 @@ This file contains the remote logging server address.
 ----
 $ oc create -f cm-rsyslog.yaml
 ----
+
+== Example
+
+----
+root@master:~$ oadm new-project rsyslog --node-selector=""
+Created project rsyslog
+root@master:~$ oc project rsyslog
+Already on project "rsyslog" on server "https://master.manage.bm.chmouel.com:8443".
+root@master:~$ oadm policy add-scc-to-user privileged system:serviceaccount:rsyslog:default
+root@master:~$ oc create -f ds-rsyslog.yaml
+daemonset "rsyslog" created
+root@master:~$ oc create -f cm-rsyslog.yaml
+configmap "rsyslog-config-cm" created
+root@master:~$ oc get po
+NAME            READY     STATUS    RESTARTS   AGE
+rsyslog-acuhj   1/1       Running   0          1m
+rsyslog-mvqkc   1/1       Running   0          1m
+rsyslog-o2fmf   1/1       Running   0          1m
+----
