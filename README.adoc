@@ -28,7 +28,7 @@ If you are using a different user than admin, you have to grant a daemonset clus
 
 As Admin, create a dedicated cluster role:
 
-```
+----
 cat <<EOF | oc create -f -
 apiVersion: v1
 kind: ClusterRole
