@@ -10,10 +10,11 @@ $ oc project rsyslog
 
 === Set SCC
 The rsyslog pods need to run privileged in order to access certain system resources.
- * /etc/machine-id - read
- * /etc/hostname - read
- * /var/log - read/write
- * /run/log - read/write
+* /etc/machine-id - read
+* /etc/hostname - read
+* /etc/localtime - read
+* /var/log - read/write
+* /run/log - read/write
 
 
 As system:admin do the following:
