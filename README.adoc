@@ -27,3 +27,11 @@ As *system:admin* do the following:
 ----
 $ oc create -f ds-rsyslog.yaml
 ----
+
+=== Create ConfigMap
+The config map contains an additional configuration file that will be placed in /etc/rsyslog.d/.
+This file contains the remote logging server address.
+
+----
+$ oc create -f cm-rsyslog.yaml
+----
