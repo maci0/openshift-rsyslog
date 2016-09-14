@@ -23,6 +23,38 @@ As *system:admin* do the following:
 # oadm policy add-scc-to-user privileged system:serviceaccount:rsyslog:default
 ----
 
+=== Grant DaemonSet ClusterRole (Optional)
+If you are using a different user than admin, you have to grant a daemonset clusterrole.
+
+As Admin, create a dedicated cluster role:
+
+```
+cat <<EOF | oc create -f -
+apiVersion: v1
+kind: ClusterRole
+metadata:
+  name: system:daemonset-admin
+rules:
+- resources:
+  - daemonsets
+  apiGroups:
+  - extensions
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - delete
+  - update
+EOF
+----
+
+Grant the daemonset cluster role to your user in the right namespace
+----
+# oadm policy add-role-to-user system:daemonset-admin flambert@redhat.com -n rsyslog
+----
+
+
 === Create DaemonSet
 ----
 $ oc create -f ds-rsyslog.yaml
