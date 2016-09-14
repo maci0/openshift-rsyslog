@@ -41,16 +41,33 @@ $ oc create -f cm-rsyslog.yaml
 ----
 root@master:~$ oadm new-project rsyslog --node-selector=""
 Created project rsyslog
+
 root@master:~$ oc project rsyslog
 Already on project "rsyslog" on server "https://master.manage.bm.chmouel.com:8443".
+
 root@master:~$ oadm policy add-scc-to-user privileged system:serviceaccount:rsyslog:default
+
 root@master:~$ oc create -f ds-rsyslog.yaml
 daemonset "rsyslog" created
+
 root@master:~$ oc create -f cm-rsyslog.yaml
 configmap "rsyslog-config-cm" created
+
 root@master:~$ oc get po
 NAME            READY     STATUS    RESTARTS   AGE
 rsyslog-acuhj   1/1       Running   0          1m
 rsyslog-mvqkc   1/1       Running   0          1m
 rsyslog-o2fmf   1/1       Running   0          1m
+
+root@master:~$ oc rsh rsyslog-acuhj ls -la /etc/rsyslog.d
+total 4
+drwxrwxrwx.  3 root root   78 Sep 14 08:13 .
+drwxr-xr-x. 49 root root 4096 Sep 14 08:13 ..
+drwxr-xr-x.  2 root root   27 Sep 14 08:13 ..9989_14_09_08_13_25.009400751
+lrwxrwxrwx.  1 root root   31 Sep 14 08:13 ..data -> ..9989_14_09_08_13_25.009400751
+lrwxrwxrwx.  1 root root   21 Sep 14 08:13 container.conf -> ..data/container.conf
+
+root@master:~$ oc rsh rsyslog-acuhj cat /etc/rsyslog.d/container.conf
+*.* @remote-log-host.example.org
+
 ----
